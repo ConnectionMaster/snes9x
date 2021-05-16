@@ -107,11 +107,13 @@ struct retro_core_option_definition option_defs_tr[] = {
    {
       "snes9x_overscan",
       "Aşırı Taramayı Kırp",
-      "Ekranın üst ve alt kısmındaki ~8 piksel sınırlarını, tipik olarak standart çözünürlüklü bir televizyondakini kaldırır. 'Otomatik' ise geçerli içeriğe bağlı olarak aşırı taramayı algılamaya ve kırpmaya çalışacaktır.",
+      "Ekranın üst ve alt kısmındaki sınırlarını, tipik olarak standart çözünürlüklü bir televizyondakini kaldırır. 'Otomatik (~8 piksel)' ise geçerli içeriğe bağlı olarak aşırı taramayı algılamaya ve kırpmaya çalışacaktır.",
       {
-         { "enabled",  NULL },
-         { "disabled", NULL },
-         { "auto",     "Otomatik" },
+         { "enabled",      "~8 piksel" },
+         { "12_pixels",    "12 piksel" },
+         { "16_pixels",    "16 piksel" },
+         { "auto",         "Otomatik (~8 piksel)" },
+         { "disabled",     NULL },
          { NULL, NULL},
       },
       "enabled"

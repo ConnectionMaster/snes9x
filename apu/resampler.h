@@ -16,7 +16,7 @@
 #endif
 #include <cmath>
 
-#ifdef __CELLOS_LV2__
+#ifdef __PS3__
 using namespace std;
 #endif
 

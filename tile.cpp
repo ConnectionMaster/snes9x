@@ -297,6 +297,73 @@ void S9xInitTileRenderer (void)
 }
 
 // Functions to select which converter and renderer to use.
+#if !defined(__PS3__)
+extern template struct TileImpl::Renderers<DrawTile16, Normal1x1>;
+extern template struct TileImpl::Renderers<DrawClippedTile16, Normal1x1>;
+extern template struct TileImpl::Renderers<DrawMosaicPixel16, Normal1x1>;
+extern template struct TileImpl::Renderers<DrawBackdrop16, Normal1x1>;
+extern template struct TileImpl::Renderers<DrawMode7MosaicBG1, Normal1x1>;
+extern template struct TileImpl::Renderers<DrawMode7BG1, Normal1x1>;
+extern template struct TileImpl::Renderers<DrawMode7MosaicBG2, Normal1x1>;
+extern template struct TileImpl::Renderers<DrawMode7BG2, Normal1x1>;
+
+extern template struct TileImpl::Renderers<DrawTile16, Normal2x1>;
+extern template struct TileImpl::Renderers<DrawClippedTile16, Normal2x1>;
+extern template struct TileImpl::Renderers<DrawMosaicPixel16, Normal2x1>;
+extern template struct TileImpl::Renderers<DrawBackdrop16, Normal2x1>;
+extern template struct TileImpl::Renderers<DrawMode7MosaicBG1, Normal2x1>;
+extern template struct TileImpl::Renderers<DrawMode7BG1, Normal2x1>;
+extern template struct TileImpl::Renderers<DrawMode7MosaicBG2, Normal2x1>;
+extern template struct TileImpl::Renderers<DrawMode7BG2, Normal2x1>;
+extern template struct TileImpl::Renderers<DrawTile16, Interlace>;
+extern template struct TileImpl::Renderers<DrawClippedTile16, Interlace>;
+extern template struct TileImpl::Renderers<DrawMosaicPixel16, Interlace>;
+
+extern template struct TileImpl::Renderers<DrawTile16, Hires>;
+extern template struct TileImpl::Renderers<DrawClippedTile16, Hires>;
+extern template struct TileImpl::Renderers<DrawMosaicPixel16, Hires>;
+extern template struct TileImpl::Renderers<DrawBackdrop16, Hires>;
+extern template struct TileImpl::Renderers<DrawMode7MosaicBG1, Hires>;
+extern template struct TileImpl::Renderers<DrawMode7BG1, Hires>;
+extern template struct TileImpl::Renderers<DrawMode7MosaicBG2, Hires>;
+extern template struct TileImpl::Renderers<DrawMode7BG2, Hires>;
+extern template struct TileImpl::Renderers<DrawTile16, HiresInterlace>;
+extern template struct TileImpl::Renderers<DrawClippedTile16, HiresInterlace>;
+extern template struct TileImpl::Renderers<DrawMosaicPixel16, HiresInterlace>;
+#else
+template struct TileImpl::Renderers<DrawTile16, Normal1x1>;
+template struct TileImpl::Renderers<DrawClippedTile16, Normal1x1>;
+template struct TileImpl::Renderers<DrawMosaicPixel16, Normal1x1>;
+template struct TileImpl::Renderers<DrawBackdrop16, Normal1x1>;
+template struct TileImpl::Renderers<DrawMode7MosaicBG1, Normal1x1>;
+template struct TileImpl::Renderers<DrawMode7BG1, Normal1x1>;
+template struct TileImpl::Renderers<DrawMode7MosaicBG2, Normal1x1>;
+template struct TileImpl::Renderers<DrawMode7BG2, Normal1x1>;
+
+template struct TileImpl::Renderers<DrawTile16, Normal2x1>;
+template struct TileImpl::Renderers<DrawClippedTile16, Normal2x1>;
+template struct TileImpl::Renderers<DrawMosaicPixel16, Normal2x1>;
+template struct TileImpl::Renderers<DrawBackdrop16, Normal2x1>;
+template struct TileImpl::Renderers<DrawMode7MosaicBG1, Normal2x1>;
+template struct TileImpl::Renderers<DrawMode7BG1, Normal2x1>;
+template struct TileImpl::Renderers<DrawMode7MosaicBG2, Normal2x1>;
+template struct TileImpl::Renderers<DrawMode7BG2, Normal2x1>;
+template struct TileImpl::Renderers<DrawTile16, Interlace>;
+template struct TileImpl::Renderers<DrawClippedTile16, Interlace>;
+template struct TileImpl::Renderers<DrawMosaicPixel16, Interlace>;
+
+template struct TileImpl::Renderers<DrawTile16, Hires>;
+template struct TileImpl::Renderers<DrawClippedTile16, Hires>;
+template struct TileImpl::Renderers<DrawMosaicPixel16, Hires>;
+template struct TileImpl::Renderers<DrawBackdrop16, Hires>;
+template struct TileImpl::Renderers<DrawMode7MosaicBG1, Hires>;
+template struct TileImpl::Renderers<DrawMode7BG1, Hires>;
+template struct TileImpl::Renderers<DrawMode7MosaicBG2, Hires>;
+template struct TileImpl::Renderers<DrawMode7BG2, Hires>;
+template struct TileImpl::Renderers<DrawTile16, HiresInterlace>;
+template struct TileImpl::Renderers<DrawClippedTile16, HiresInterlace>;
+template struct TileImpl::Renderers<DrawMosaicPixel16, HiresInterlace>;
+#endif
 
 void S9xSelectTileRenderers (int BGMode, bool8 sub, bool8 obj)
 {

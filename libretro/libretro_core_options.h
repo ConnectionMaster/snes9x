@@ -83,11 +83,13 @@ struct retro_core_option_definition option_defs_us[] = {
    {
       "snes9x_overscan",
       "Crop Overscan",
-      "Remove the ~8 pixel borders at the top and bottom of the screen, typically unused by games and hidden by the bezel of a standard-definition television. 'Auto' will attempt to detect and crop overscan based on the current content.",
+      "Remove the borders at the top and bottom of the screen, typically unused by games and hidden by the bezel of a standard-definition television. 'Auto' will attempt to detect and crop the ~8 pixel overscan based on the current content.",
       {
-         { "enabled",  NULL },
-         { "disabled", NULL },
-         { "auto",     "Auto" },
+         { "enabled",     "~8 Pixels"},
+         { "12_pixels",   "12 Pixels" },
+         { "16_pixels",   "16 Pixels" },
+         { "auto",        "Auto (~8 Pixels)" },
+         { "disabled",    NULL },
          { NULL, NULL},
       },
       "enabled"

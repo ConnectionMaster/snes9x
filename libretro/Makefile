@@ -221,29 +221,26 @@ else ifneq (,$(findstring ios,$(platform)))
    TARGET := $(TARGET_NAME)_libretro_ios.dylib
    fpic := -fPIC
    SHARED := -dynamiclib
+   MINVERSION :=
    ifeq ($(IOSSDK),)
       IOSSDK := $(shell xcodebuild -version -sdk iphoneos Path)
    endif
    ifeq ($(platform),ios-arm64)
-		CC = clang -arch arm64 -isysroot $(IOSSDK)
-		CXX = clang++ -arch arm64 -isysroot $(IOSSDK)
+	CC = cc -arch arm64 -isysroot $(IOSSDK)
+        CXX = c++ -arch arm64 -isysroot $(IOSSDK)
    else
-		CC = clang -arch armv7 -isysroot $(IOSSDK)
-		CXX = clang++ -arch armv7 -isysroot $(IOSSDK)
+	CC = cc -arch armv7 -isysroot $(IOSSDK)
+        CXX = c++ -arch armv7 -isysroot $(IOSSDK)
    endif
    CXXFLAGS += -DIOS
    CXXFLAGS += -DARM
    ifeq ($(platform),$(filter $(platform),ios9 ios-arm64))
-      CC       += -miphoneos-version-min=8.0
-      CXX      += -miphoneos-version-min=8.0
-      CFLAGS   += -miphoneos-version-min=8.0
-      CXXFLAGS += -miphoneos-version-min=8.0
+      MINVERSION = -miphoneos-version-min=8.0
    else
-      CC       += -miphoneos-version-min=5.0
-      CXX      += -miphoneos-version-min=5.0
-      CFLAGS   += -miphoneos-version-min=5.0
-      CXXFLAGS += -miphoneos-version-min=5.0
+      MINVERSION = -miphoneos-version-min=5.0
    endif
+   CFLAGS   += $(MINVERSION)
+   CXXFLAGS += $(MINVERSION)
 
 #tvOS
 else ifeq ($(platform), tvos-arm64)
@@ -258,6 +255,8 @@ else ifeq ($(platform), tvos-arm64)
    endif
    CXXFLAGS += -DIOS
    CXXFLAGS += -DARM
+   CC = cc -arch arm64 -isysroot $(IOSSDK)
+   CXX = c++ -arch arm64 -isysroot $(IOSSDK)
 
 # Theos
 else ifeq ($(platform), theos_ios)
@@ -297,34 +296,21 @@ else ifeq ($(platform), vita)
    STATIC_LINKING_LINK=1
    LTO =
 
-# PS3
-else ifneq (,$(filter $(platform), ps3 sncps3 psl1ght))
+# PS3/PSl1GHT
+else ifneq (,$(filter $(platform), ps3 psl1ght))
+   ifeq ($(platform), psl1ght)
+       CXXFLAGS += -DBLARGG_BIG_ENDIAN=1 -D__ppc__ -D__PSL1GHT__
+   else
+       CXXFLAGS += -DBLARGG_BIG_ENDIAN=1 -D__ppc__ -D__PS3__
+   endif
    TARGET := $(TARGET_NAME)_libretro_$(platform).a
-   CXXFLAGS += -DBLARGG_BIG_ENDIAN=1 -D__ppc__
+   CC = $(PS3DEV)/ppu/bin/ppu-$(COMMONLV)gcc$(EXE_EXT)
+   CXX = $(PS3DEV)/ppu/bin/ppu-$(COMMONLV)g++$(EXE_EXT)
+   AR = $(PS3DEV)/ppu/bin/ppu-$(COMMONLV)ar$(EXE_EXT)
    STATIC_LINKING=1
    STATIC_LINKING_LINK=1
    HAVE_STRINGS_H = 0
-
-   # sncps3
-   ifneq (,$(findstring sncps3,$(platform)))
-      TARGET := $(TARGET_NAME)_libretro_ps3.a
-      CC = $(CELL_SDK)/host-win32/sn/bin/ps3ppusnc.exe
-      CXX = $(CC)
-      AR = $(CELL_SDK)/host-win32/sn/bin/ps3snarl.exe
-
-   # PS3
-   else ifneq (,$(findstring ps3,$(platform)))
-      CC = $(CELL_SDK)/host-win32/ppu/bin/ppu-lv2-gcc.exe
-      CXX = $(CELL_SDK)/host-win32/ppu/bin/ppu-lv2-g++.exe
-      AR = $(CELL_SDK)/host-win32/ppu/bin/ppu-lv2-ar.exe
-
-   # Lightweight PS3 Homebrew SDK
-   else ifneq (,$(findstring psl1ght,$(platform)))
-      CC = $(PS3DEV)/ppu/bin/ppu-gcc$(EXE_EXT)
-      CXX = $(PS3DEV)/ppu/bin/ppu-g++$(EXE_EXT)
-      AR = $(PS3DEV)/ppu/bin/ppu-ar$(EXE_EXT)
-   endif
-
+   
 # Xbox 360
 else ifeq ($(platform), xenon)
    CFLAGS += $(LTO)

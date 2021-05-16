@@ -221,7 +221,6 @@ void S9xEndScreenRefresh (void)
 			{
 				uint32 saved = PPU.CGDATA[0];
 				IPPU.ColorsChanged = FALSE;
-				S9xSetPalette();
 				PPU.CGDATA[0] = saved;
 			}
 
@@ -796,7 +795,7 @@ static void DrawOBJS (int D)
 	BG.InterlaceLine = GFX.InterlaceFrame ? 8 : 0;
 	GFX.Z1 = 2;
 	int sprite_limit = (Settings.MaxSpriteTilesPerLine == 128) ? 128 : 32;
-
+	
 	for (uint32 Y = GFX.StartY, Offset = Y * GFX.PPL; Y <= GFX.EndY; Y++, Offset += GFX.PPL)
 	{
 		int	I = 0;
